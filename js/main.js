@@ -1,92 +1,49 @@
-// Mobile Menu Toggle - DIAGNOSTIC VERSION with console logging
+// Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 DIAGNOSTIC: Script loaded');
-    
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileNav = document.querySelector('.mobile-nav');
     const body = document.body;
 
-    console.log('🔍 DIAGNOSTIC: menuToggle found:', menuToggle);
-    console.log('🔍 DIAGNOSTIC: mobileNav found:', mobileNav);
-
     if (menuToggle && mobileNav) {
-        console.log('✅ DIAGNOSTIC: Both elements found, attaching events');
-        
-        // Function to toggle menu
-        function toggleMenu(e) {
-            console.log('🔍 DIAGNOSTIC: toggleMenu called', e.type);
+        // Toggle menu on button click
+        menuToggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            const wasActive = menuToggle.classList.contains('active');
-            console.log('🔍 DIAGNOSTIC: Menu was active:', wasActive);
             
             menuToggle.classList.toggle('active');
             mobileNav.classList.toggle('active');
             body.classList.toggle('menu-open');
             
-            const isNowActive = menuToggle.classList.contains('active');
-            console.log('🔍 DIAGNOSTIC: Menu is now active:', isNowActive);
-        }
-        
-        // Add both click and touch events
-        menuToggle.addEventListener('click', function(e) {
-            console.log('🔍 DIAGNOSTIC: Click event fired');
-            toggleMenu(e);
-        });
-        
-        menuToggle.addEventListener('touchstart', function(e) {
-            console.log('🔍 DIAGNOSTIC: Touchstart event fired');
-        });
-        
-        menuToggle.addEventListener('touchend', function(e) {
-            console.log('🔍 DIAGNOSTIC: Touchend event fired');
-            e.preventDefault();
-            toggleMenu(e);
+            // Update aria-expanded
+            const isOpen = menuToggle.classList.contains('active');
+            menuToggle.setAttribute('aria-expanded', isOpen);
         });
 
-        // Close menu when clicking a link
+        // Close menu when clicking a nav link
+        // Important: Don't prevent default - let the link navigate!
         mobileNav.querySelectorAll('a').forEach(link => {
-            const closeMenu = () => {
-                console.log('🔍 DIAGNOSTIC: Closing menu from link click');
-                menuToggle.classList.remove('active');
-                mobileNav.classList.remove('active');
-                body.classList.remove('menu-open');
-            };
-            
-            link.addEventListener('click', closeMenu);
-            link.addEventListener('touchend', closeMenu);
+            link.addEventListener('click', function() {
+                // Small delay to allow navigation to start
+                setTimeout(function() {
+                    menuToggle.classList.remove('active');
+                    mobileNav.classList.remove('active');
+                    body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }, 100);
+            });
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!menuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
                 if (mobileNav.classList.contains('active')) {
-                    console.log('🔍 DIAGNOSTIC: Closing menu from outside click');
                     menuToggle.classList.remove('active');
                     mobileNav.classList.remove('active');
                     body.classList.remove('menu-open');
+                    menuToggle.setAttribute('aria-expanded', 'false');
                 }
             }
         });
-        
-        // Also handle touch events for closing
-        document.addEventListener('touchend', function(e) {
-            if (!menuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
-                if (mobileNav.classList.contains('active')) {
-                    console.log('🔍 DIAGNOSTIC: Closing menu from outside touch');
-                    menuToggle.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    body.classList.remove('menu-open');
-                }
-            }
-        });
-        
-        console.log('✅ DIAGNOSTIC: All event listeners attached');
-    } else {
-        console.error('❌ DIAGNOSTIC: Elements not found!');
-        if (!menuToggle) console.error('❌ menuToggle is missing');
-        if (!mobileNav) console.error('❌ mobileNav is missing');
     }
 
     // Animated Counter
@@ -227,12 +184,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
     
     emailLinks.forEach(link => {
-        // If link has data-email attribute, use that as text
         if (link.dataset.email) {
             link.textContent = link.dataset.email;
         }
         
-        // If link text is empty or obfuscated, extract email from href
         if (!link.textContent || link.textContent.includes('[email') || link.textContent.includes('protected')) {
             const email = link.href.replace('mailto:', '');
             if (email && email.includes('@')) {
@@ -240,9 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Ensure link is clickable
         link.style.pointerEvents = 'auto';
     });
-    
-    console.log('✅ DIAGNOSTIC: Script finished loading');
 });
