@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integration & API | Insurio - Embedded Insurance for Developers</title>
+    <meta name="description" content="Integrate mortgage protection insurance into your platform. Co-branded pages, embeddable widgets, and API access. Developer documentation and sandbox environment.">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://insurio.ca/integrate/">
+    <meta property="og:title" content="Integration & API | Insurio - Embedded Insurance for Developers">
+    <meta property="og:description" content="Embed mortgage protection into your platform with our API, widgets, or co-branded pages.">
+    <meta property="og:image" content="https://insurio.ca/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://insurio.ca/images/og-image.jpg">
+    <link rel="icon" type="image/webp" href="../images/favicon.webp">
+    <link rel="apple-touch-icon" href="../images/favicon.webp">
+    <link rel="canonical" href="https://insurio.ca/integrate/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .code-block {
+            background: var(--navy-900);
+            border-radius: 12px;
+            padding: 24px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        .code-block code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--slate-300);
+            line-height: 1.6;
+        }
+        .code-block .comment { color: var(--slate-500); }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .keyword { color: #ff7b72; }
+        .code-block .property { color: #79c0ff; }
+        .code-block .number { color: #a5d6ff; }
+        
+        .endpoint-card {
+            background: var(--white);
+            border: 1px solid var(--slate-200);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .endpoint-method {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        .method-get { background: #dbeafe; color: #1d4ed8; }
+        .method-post { background: #dcfce7; color: #15803d; }
+        .endpoint-path {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--navy-800);
+        }
+        
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--slate-200);
+            padding-bottom: 0;
+        }
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--slate-500);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+        }
+        .tab-btn:hover { color: var(--navy-800); }
+        .tab-btn.active {
+            color: var(--gold-600);
+        }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold-500);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .widget-preview {
+            background: var(--slate-100);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        .widget-preview-inner {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 360px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <img src="../images/logo.webp" alt="Insurio">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/for-clients/">For Clients</a></li>
+                    <li><a href="/compare/">Compare</a></li>
+                    <li><a href="/partners/">Partner Program</a></li>
+                    <li><a href="/enterprise/">For Platforms</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta">
+                <a href="/partners/" class="btn btn-primary btn-small">Partner With Us</a>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="/for-clients/">For Clients</a></li>
+                <li><a href="/compare/">Compare</a></li>
+                <li><a href="/partners/">Partner Program</a></li>
+                <li><a href="/enterprise/">For Platforms</a></li>
+                <li><a href="/integrate/">Integration & API</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero" style="padding-bottom:60px">
+            <div class="container">
+                <div style="max-width:800px;margin:0 auto;text-align:center">
+                    <div class="hero-eyebrow" style="justify-content:center">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                        Integration & API
+                    </div>
+                    <h1>Build Insurance Into <span class="highlight">Your Product</span></h1>
+                    <p class="hero-description" style="margin-left:auto;margin-right:auto;max-width:600px">Three ways to integrate mortgage protection: co-branded pages for quick wins, embeddable widgets for seamless UX, or full API access for complete control.</p>
+                    <div class="hero-ctas" style="justify-content:center">
+                        <a href="#request-access" class="btn btn-primary btn-large">Request API Access</a>
+                        <a href="#documentation" class="btn btn-secondary btn-large">View Docs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Options -->
+        <section id="documentation" style="padding:80px 0;background:var(--white)">
+            <div class="container">
+                <div style="max-width:1000px;margin:0 auto">
+                    
+                    <!-- Tabs -->
+                    <div class="tab-nav">
+                        <button class="tab-btn active" data-tab="cobranded">Co-Branded Pages</button>
+                        <button class="tab-btn" data-tab="widget">Quote Widget</button>
+                        <button class="tab-btn" data-tab="api">API Reference</button>
+                    </div>
+                    
+                    <!-- Tab 1: Co-Branded Pages -->
+                    <div class="tab-content active" id="tab-cobranded">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+                            <div>
+                                <h2 style="font-size:28px;margin-bottom:16px">Co-Branded Landing Pages</h2>
+                                <p style="color:var(--slate-600);font-size:16px;line-height:1.7;margin-bottom:24px">The fastest way to start. We create a custom landing page at <code style="background:var(--slate-100);padding:2px 8px;border-radius:4px;font-size:14px">insurio.ca/your-brand</code> with your logo, colors, and messaging.</p>
+                                
+                                <h4 style="font-size:16px;margin-bottom:12px;margin-top:24px">What's Included</h4>
+                                <ul style="list-style:none;padding:0;margin:0 0 24px 0">
+                                    <li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+                                        <svg width="20" height="20" fill="var(--gold-500)" viewBox="0 0 20 20" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                        <span style="color:var(--slate-600)">Your logo and brand colors</span>
+                                    </li>
+                                    <li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+                                        <svg width="20" height="20" fill="var(--gold-500)" viewBox="0 0 20 20" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                        <span style="color:var(--slate-600)">Custom welcome message</span>
+                                    </li>
+                                    <li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+                                        <svg width="20" height="20" fill="var(--gold-500)" viewBox="0 0 20 20" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                        <span style="color:var(--slate-600)">Lead tracking with unique referral code</span>
+                                    </li>
+                                    <li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px">
+                                        <svg width="20" height="20" fill="var(--gold-500)" viewBox="0 0 20 20" style="flex-shrink:0;margin-top:2px"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                        <span style="color:var(--slate-600)">Monthly commission reporting</span>
+                                    </li>
+                                </ul>
+                                
+                                <div style="background:var(--gold-50);border:1px solid var(--gold-200);border-radius:12px;padding:16px">
+                                    <div style="font-size:13px;font-weight:600;color:var(--gold-700);margin-bottom:4px">SETUP TIME</div>
+                                    <div style="font-size:15px;color:var(--navy-800)">24-48 hours after approval</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="background:var(--slate-100);border-radius:16px;padding:24px">
+                                    <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px">Preview</div>
+                                    <div style="background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg)">
+                                        <div style="background:var(--navy-800);padding:12px 16px;display:flex;align-items:center;gap:8px">
+                                            <div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div>
+                                            <div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e"></div>
+                                            <div style="width:8px;height:8px;border-radius:50%;background:#28ca42"></div>
+                                            <div style="flex:1;text-align:center;font-size:11px;color:var(--slate-400)">insurio.ca/acme-mortgages</div>
+                                        </div>
+                                        <div style="padding:24px;text-align:center">
+                                            <div style="width:120px;height:40px;background:var(--slate-200);border-radius:8px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--slate-500)">Your Logo</div>
+                                            <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--navy-900);margin-bottom:8px">Welcome, ACME Clients</div>
+                                            <div style="font-size:13px;color:var(--slate-600);margin-bottom:20px">Get your personalized insurance quote</div>
+                                            <div style="background:var(--gold-400);color:var(--navy-900);padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;display:inline-block">Get Quote</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 2: Widget -->
+                    <div class="tab-content" id="tab-widget">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+                            <div>
+                                <h2 style="font-size:28px;margin-bottom:16px">Embeddable Quote Widget</h2>
+                                <p style="color:var(--slate-600);font-size:16px;line-height:1.7;margin-bottom:24px">Add a quote calculator directly to your website. Users get instant estimates without leaving your site. Leads are automatically tracked to your account.</p>
+                                
+                                <h4 style="font-size:16px;margin-bottom:12px;margin-top:24px">Installation</h4>
+                                <p style="color:var(--slate-600);font-size:15px;margin-bottom:12px">Add this snippet before your closing <code style="background:var(--slate-100);padding:2px 6px;border-radius:4px;font-size:13px">&lt;/body&gt;</code> tag:</p>
+                                
+                                <div class="code-block">
+                                    <code>
+<span class="comment">&lt;!-- Insurio Quote Widget --&gt;</span>
+&lt;<span class="keyword">script</span>&gt;
+  (<span class="keyword">function</span>(w,d,s,o,f,js,fjs){
+    w[<span class="string">'InsuriWidget'</span>]=o;w[o]=w[o]||<span class="keyword">function</span>(){
+    (w[o].q=w[o].q||[]).push(<span class="property">arguments</span>)};
+    js=d.createElement(s);fjs=d.getElementsByTagName(s)[<span class="number">0</span>];
+    js.src=f;js.async=<span class="number">1</span>;fjs.parentNode.insertBefore(js,fjs);
+  })(window,document,<span class="string">'script'</span>,<span class="string">'insuri'</span>,
+    <span class="string">'https://cdn.insurio.ca/widget.js'</span>);
+  
+  insuri(<span class="string">'init'</span>, { 
+    partnerId: <span class="string">'YOUR_PARTNER_ID'</span> 
+  });
+&lt;/<span class="keyword">script</span>&gt;
+
+<span class="comment">&lt;!-- Place widget container where desired --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="property">id</span>=<span class="string">"insurio-widget"</span>&gt;&lt;/<span class="keyword">div</span>&gt;
+                                    </code>
+                                </div>
+                                
+                                <h4 style="font-size:16px;margin-bottom:12px;margin-top:24px">Configuration Options</h4>
+                                <div class="code-block">
+                                    <code>
+insuri(<span class="string">'init'</span>, {
+  partnerId: <span class="string">'YOUR_PARTNER_ID'</span>,
+  theme: <span class="string">'light'</span>, <span class="comment">// 'light' or 'dark'</span>
+  primaryColor: <span class="string">'#f59e0b'</span>,
+  defaultAmount: <span class="number">500000</span>,
+  showBankComparison: <span class="keyword">true</span>
+});
+                                    </code>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="widget-preview">
+                                    <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.5px">Live Preview</div>
+                                    <div class="widget-preview-inner">
+                                        <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--navy-900);margin-bottom:16px">Quick Quote</div>
+                                        <div style="text-align:left;margin-bottom:12px">
+                                            <label style="font-size:13px;font-weight:600;color:var(--slate-600);display:block;margin-bottom:4px">Mortgage Amount</label>
+                                            <div style="background:var(--slate-100);border-radius:8px;padding:10px 12px;font-size:15px;color:var(--navy-800)">$500,000</div>
+                                        </div>
+                                        <div style="text-align:left;margin-bottom:16px">
+                                            <label style="font-size:13px;font-weight:600;color:var(--slate-600);display:block;margin-bottom:4px">Your Age</label>
+                                            <div style="background:var(--slate-100);border-radius:8px;padding:10px 12px;font-size:15px;color:var(--navy-800)">35</div>
+                                        </div>
+                                        <div style="background:var(--navy-50);border-radius:8px;padding:12px;margin-bottom:16px">
+                                            <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px">
+                                                <span style="color:var(--slate-600)">Est. Premium:</span>
+                                                <span style="font-weight:700;color:var(--navy-800)">$42/mo</span>
+                                            </div>
+                                            <div style="display:flex;justify-content:space-between;font-size:13px">
+                                                <span style="color:var(--slate-500)">Bank comparison:</span>
+                                                <span style="color:var(--slate-500);text-decoration:line-through">$61/mo</span>
+                                            </div>
+                                        </div>
+                                        <div style="background:var(--gold-400);color:var(--navy-900);padding:12px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer">Get Full Quote</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 3: API -->
+                    <div class="tab-content" id="tab-api">
+                        <div style="margin-bottom:40px">
+                            <h2 style="font-size:28px;margin-bottom:16px">REST API</h2>
+                            <p style="color:var(--slate-600);font-size:16px;line-height:1.7;max-width:700px">Full programmatic access to quotes, applications, and policy management. Build insurance directly into your product experience.</p>
+                            
+                            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+                                <div style="background:var(--navy-900);color:var(--white);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500">
+                                    <span style="color:var(--slate-400)">Base URL:</span> https://api.insurio.ca/v1
+                                </div>
+                                <div style="background:var(--gold-100);color:var(--gold-800);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500">
+                                    Beta Access Available
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="font-size:18px;margin-bottom:16px">Endpoints</h3>
+                        
+                        <div class="endpoint-card">
+                            <div style="margin-bottom:12px">
+                                <span class="endpoint-method method-post">POST</span>
+                                <span class="endpoint-path">/quotes</span>
+                            </div>
+                            <p style="color:var(--slate-600);font-size:14px;margin-bottom:16px">Generate a quote based on applicant details.</p>
+                            <div class="code-block">
+                                <code>
+{
+  <span class="property">"mortgage_amount"</span>: <span class="number">500000</span>,
+  <span class="property">"term_years"</span>: <span class="number">25</span>,
+  <span class="property">"applicant"</span>: {
+    <span class="property">"age"</span>: <span class="number">35</span>,
+    <span class="property">"smoker"</span>: <span class="keyword">false</span>,
+    <span class="property">"province"</span>: <span class="string">"AB"</span>
+  },
+  <span class="property">"coverage_type"</span>: <span class="string">"life"</span>
+}
+                                </code>
+                            </div>
+                        </div>
+                        
+                        <div class="endpoint-card">
+                            <div style="margin-bottom:12px">
+                                <span class="endpoint-method method-get">GET</span>
+                                <span class="endpoint-path">/quotes/{quote_id}</span>
+                            </div>
+                            <p style="color:var(--slate-600);font-size:14px">Retrieve quote details and available carriers.</p>
+                        </div>
+                        
+                        <div class="endpoint-card">
+                            <div style="margin-bottom:12px">
+                                <span class="endpoint-method method-post">POST</span>
+                                <span class="endpoint-path">/applications</span>
+                            </div>
+                            <p style="color:var(--slate-600);font-size:14px">Submit a full application for underwriting.</p>
+                        </div>
+                        
+                        <div class="endpoint-card">
+                            <div style="margin-bottom:12px">
+                                <span class="endpoint-method method-get">GET</span>
+                                <span class="endpoint-path">/applications/{app_id}/status</span>
+                            </div>
+                            <p style="color:var(--slate-600);font-size:14px">Check application status and underwriting decision.</p>
+                        </div>
+                        
+                        <div style="margin-top:32px;padding:24px;background:var(--slate-50);border-radius:16px">
+                            <h4 style="font-size:16px;margin-bottom:8px">Webhooks</h4>
+                            <p style="color:var(--slate-600);font-size:14px;margin-bottom:16px">Subscribe to real-time events for application updates, policy issuance, and commission payouts.</p>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                                <code style="background:var(--white);padding:6px 12px;border-radius:6px;font-size:13px;border:1px solid var(--slate-200)">quote.created</code>
+                                <code style="background:var(--white);padding:6px 12px;border-radius:6px;font-size:13px;border:1px solid var(--slate-200)">application.submitted</code>
+                                <code style="background:var(--white);padding:6px 12px;border-radius:6px;font-size:13px;border:1px solid var(--slate-200)">application.approved</code>
+                                <code style="background:var(--white);padding:6px 12px;border-radius:6px;font-size:13px;border:1px solid var(--slate-200)">policy.issued</code>
+                                <code style="background:var(--white);padding:6px 12px;border-radius:6px;font-size:13px;border:1px solid var(--slate-200)">commission.paid</code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Request Access -->
+        <section id="request-access" style="padding:80px 0;background:var(--slate-50)">
+            <div class="container">
+                <div style="max-width:600px;margin:0 auto">
+                    <div style="text-align:center;margin-bottom:40px">
+                        <h2 style="font-size:clamp(28px,4vw,36px);margin-bottom:16px">Request Access</h2>
+                        <p style="color:var(--slate-600);font-size:17px">Tell us about your integration needs and we'll get you set up with sandbox credentials.</p>
+                    </div>
+                    
+                    <div class="form-card" style="background:var(--white);border-radius:24px;padding:40px;box-shadow:var(--shadow-lg)">
+                        <form id="apiForm" action="https://script.google.com/macros/s/AKfycbzIMHEDuydD-sZ-SPPFhskx8BIwu4sCwInd-MurELwXnSKQU6gx3AoQTo3_E9B_bZ-0/exec" method="POST" target="hidden_iframe">
+                            <input type="text" name="_gotcha" style="display:none">
+                            <input type="hidden" name="_subject" value="API/Integration Request from Insurio">
+                            <input type="hidden" name="form_type" value="api_request">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Your Name *</label>
+                                    <input type="text" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Work Email *</label>
+                                    <input type="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Company *</label>
+                                <input type="text" name="company" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Integration Type</label>
+                                <select name="integration_type">
+                                    <option value="—">Select...</option>
+                                    <option value="cobranded">Co-Branded Landing Page</option>
+                                    <option value="widget">Embeddable Widget</option>
+                                    <option value="api">Full API Access</option>
+                                    <option value="unsure">Not Sure Yet</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tell us about your use case</label>
+                                <textarea name="notes" rows="3" placeholder="e.g., We're a mortgage CRM looking to offer insurance quotes at the point of pre-approval..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-large" style="width:100%">Request Access</button>
+                            <p style="font-size:13px;color:var(--slate-500);text-align:center;margin-top:16px">We typically respond within one business day.</p>
+                        </form>
+                        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <img src="/images/logo-white.webp" alt="Insurio" style="height:44px;width:auto">
+                    </a>
+                    <p>Mortgage protection that's owned by the borrower, not the bank.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/for-clients/">For Clients</a></li>
+                        <li><a href="/compare/">Compare</a></li>
+                        <li><a href="/partners/">Partner Program</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                        <li><a href="/terms/">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:hello@insurio.ca" data-email="hello@insurio.ca">hello@insurio.ca</a></li>
+                        <li><a href="tel:+14034653937">(403) 465-3937</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                    <div>
+                        <strong>OSFI Regulated</strong>
+                        <span>All carriers</span>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                    <div>
+                        <strong>Assumption Life</strong>
+                        <span>Trusted since 1903</span>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                    <div>
+                        <strong>Serving All of Canada</strong>
+                        <span>Coast to coast</span>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <div>
+                        <strong>PIPEDA Compliant</strong>
+                        <span>Privacy protected</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-legal">Insurance products are provided through Insurio Ltd. and our licensed partners across Canada. Coverage is underwritten by Canada's leading life insurers through Assumption Life, regulated by the Office of the Superintendent of Financial Institutions (OSFI). All coverage is subject to underwriting approval. This website provides general information only and does not constitute financial or insurance advice.</p>
+                <p class="footer-copyright">© 2026 Insurio Ltd. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="sticky-cta">
+        <a href="#request-access" class="btn btn-primary">Request API Access</a>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active from all tabs and content
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active to clicked tab and corresponding content
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
