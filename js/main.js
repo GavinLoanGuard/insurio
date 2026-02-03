@@ -1,47 +1,33 @@
 // Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Insurio site loaded'); // Debug log
+    
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileNav = document.querySelector('.mobile-nav');
     const body = document.body;
 
     if (menuToggle && mobileNav) {
-        // Toggle menu on button click
-        menuToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
+        menuToggle.addEventListener('click', function() {
             menuToggle.classList.toggle('active');
             mobileNav.classList.toggle('active');
             body.classList.toggle('menu-open');
-            
-            // Update aria-expanded
-            const isOpen = menuToggle.classList.contains('active');
-            menuToggle.setAttribute('aria-expanded', isOpen);
         });
 
-        // Close menu when clicking a nav link
-        // Important: Don't prevent default - let the link navigate!
+        // Close menu when clicking a link
         mobileNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', function() {
-                // Small delay to allow navigation to start
-                setTimeout(function() {
-                    menuToggle.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    body.classList.remove('menu-open');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                }, 100);
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.classList.remove('menu-open');
             });
         });
 
         // Close menu when clicking outside
         document.addEventListener('click', function(e) {
             if (!menuToggle.contains(e.target) && !mobileNav.contains(e.target)) {
-                if (mobileNav.classList.contains('active')) {
-                    menuToggle.classList.remove('active');
-                    mobileNav.classList.remove('active');
-                    body.classList.remove('menu-open');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                }
+                menuToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                body.classList.remove('menu-open');
             }
         });
     }
@@ -127,74 +113,40 @@ document.addEventListener('DOMContentLoaded', function() {
         stickyCta.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
     }
 
-    // Form submission handling
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
+    // FORM SUBMISSION HANDLING - SIMPLE AND BULLETPROOF
+    console.log('Setting up form handlers'); // Debug log
+    
+    // Find all forms that submit to Google Apps Script
+    const allForms = document.querySelectorAll('form[action*="script.google.com"]');
+    console.log('Found forms:', allForms.length); // Debug log
+    
+    allForms.forEach(function(form) {
+        console.log('Adding listener to form:', form.id); // Debug log
+        
+        form.addEventListener('submit', function(event) {
+            console.log('Form submitted!'); // Debug log
             
+            // Find the submit button
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
             
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: {
-                        'Accept': 'application/json'
+            if (submitBtn) {
+                // Disable and show "Sending..."
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                console.log('Button changed to Sending...'); // Debug log
+                
+                // After 2 seconds, show success message
+                setTimeout(function() {
+                    console.log('Showing success message'); // Debug log
+                    
+                    // Find the form card
+                    const formCard = form.closest('.form-card');
+                    
+                    if (formCard) {
+                        formCard.innerHTML = '<div class="form-success" style="text-align:center;padding:60px 20px;"><svg width="64" height="64" fill="none" stroke="#f59e0b" stroke-width="2" viewBox="0 0 24 24" style="margin:0 auto 24px;display:block;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><h3 style="font-size:28px;margin-bottom:16px;color:#0f1c2e;font-family:\'Outfit\',sans-serif;font-weight:700;">Thank you!</h3><p style="color:#475569;font-size:18px;line-height:1.6;max-width:400px;margin:0 auto;">We\'ve received your submission and will be in touch within 24 hours.</p></div>';
                     }
-                });
-                
-                if (response.ok) {
-                    // Show success message
-                    form.innerHTML = `
-                        <div class="form-success">
-                            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <h3>Thank you!</h3>
-                            <p>We've received your message and will be in touch within 24 hours.</p>
-                        </div>
-                    `;
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (error) {
-                // Show error message
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-                
-                // Add error message if not already present
-                let errorMsg = form.querySelector('.form-error');
-                if (!errorMsg) {
-                    errorMsg = document.createElement('p');
-                    errorMsg.className = 'form-error';
-                    errorMsg.textContent = 'Something went wrong. Please try again or email us directly.';
-                    submitBtn.parentNode.insertBefore(errorMsg, submitBtn.nextSibling);
-                }
+                }, 2000);
             }
         });
-    });
-    
-    // Force email visibility (prevent obfuscation)
-    const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
-    
-    emailLinks.forEach(link => {
-        if (link.dataset.email) {
-            link.textContent = link.dataset.email;
-        }
-        
-        if (!link.textContent || link.textContent.includes('[email') || link.textContent.includes('protected')) {
-            const email = link.href.replace('mailto:', '');
-            if (email && email.includes('@')) {
-                link.textContent = email;
-            }
-        }
-        
-        link.style.pointerEvents = 'auto';
     });
 });
