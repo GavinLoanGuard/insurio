@@ -41,69 +41,6 @@
             min-height: 100vh;
         }
 
-        /* Header Navigation */
-        .main-header {
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .nav-cta {
-            background: var(--accent);
-            color: white;
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .nav-cta:hover {
-            background: var(--accent-hover);
-        }
-
-        /* Mobile menu toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text);
-            cursor: pointer;
-        }
-
         /* Main Content */
         .main-content {
             padding: 3rem 1rem;
@@ -621,20 +558,10 @@
         }
     </style>
 </head>
+    <link rel="stylesheet" href="../styles.css">
 <body>
     <!-- Header Navigation -->
-    <header class="main-header">
-        <nav class="nav-container">
-            <a href="/" class="nav-logo">Insurio</a>
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/about">About</a>
-                <a href="/calculator/">Calculator</a>
-                <a href="/contact" class="nav-cta">Get Started</a>
-            </div>
-            <button class="mobile-menu-toggle">☰</button>
-        </nav>
-    </header>
+    
 
     <!-- Main Content -->
     <div class="main-content">
@@ -725,33 +652,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>Insurio</h3>
-                    <p>Making mortgage protection insurance simple and accessible for Canadian homeowners through partnership with Assumption Life.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="/">Home</a>
-                    <a href="/for-clients/">For Clients</a>
-                    <a href="/compare/">Compare</a>
-                    <a href="/partners/">Partner Program</a>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <p>Email: <a href="mailto:hello@insurio.ca">hello@insurio.ca</a></p>
-                    <p>Phone: (403) 465-3937</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Insurio Ltd. All rights reserved.</p>
-                <p style="margin-top: 1rem;">Licensed Insurance Agent in Alberta: Life Insurance License M-124004-SP-2025 | Accident & Sickness License Q-124004-SP-2025</p>
-                <p style="margin-top: 0.5rem;">Representing Empire Life Insurance Company. Marketing partnership with Assumption Life.</p>
-            </div>
-        </div>
-    </footer>
+    
 
     <script>
         // Utility functions
