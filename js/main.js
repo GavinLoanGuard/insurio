@@ -1,7 +1,5 @@
 // Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Insurio site loaded'); // Debug log
-    
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileNav = document.querySelector('.mobile-nav');
     const body = document.body;
@@ -113,32 +111,22 @@ document.addEventListener('DOMContentLoaded', function() {
         stickyCta.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
     }
 
-    // FORM SUBMISSION HANDLING - SIMPLE AND BULLETPROOF
-    console.log('Setting up form handlers'); // Debug log
-    
+    // FORM SUBMISSION HANDLING
     // Find all forms that submit to Google Apps Script
     const allForms = document.querySelectorAll('form[action*="script.google.com"]');
-    console.log('Found forms:', allForms.length); // Debug log
-    
+
     allForms.forEach(function(form) {
-        console.log('Adding listener to form:', form.id); // Debug log
-        
         form.addEventListener('submit', function(event) {
-            console.log('Form submitted!'); // Debug log
-            
             // Find the submit button
             const submitBtn = form.querySelector('button[type="submit"]');
-            
+
             if (submitBtn) {
                 // Disable and show "Sending..."
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Sending...';
-                console.log('Button changed to Sending...'); // Debug log
-                
+
                 // After 2 seconds, show success message
                 setTimeout(function() {
-                    console.log('Showing success message'); // Debug log
-                    
                     // Find the form card
                     const formCard = form.closest('.form-card');
                     
