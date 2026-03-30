@@ -4,6 +4,7 @@
   <url><loc>https://insurio.ca/for-clients/</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://insurio.ca/compare/</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://insurio.ca/partners/</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://insurio.ca/brokers/</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://insurio.ca/contact/</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://insurio.ca/calculator/</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://insurio.ca/enterprise/</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
