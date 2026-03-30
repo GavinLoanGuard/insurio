@@ -311,6 +311,11 @@
                             <button type="submit" class="btn btn-primary btn-large" style="width:100%">Request Demo</button>
                             <p style="font-size:13px;color:var(--slate-500);text-align:center;margin-top:16px">We'll respond within one business day.</p>
                         </form>
+                        <div id="enterpriseSuccess" style="display:none;text-align:center;padding:40px 20px">
+                            <div style="font-size:48px;margin-bottom:16px">✓</div>
+                            <h3 style="margin-bottom:12px">Demo request received!</h3>
+                            <p style="color:var(--slate-600)">We'll be in touch within one business day to schedule your demo.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -394,5 +399,16 @@
     </div>
 
     <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('enterpriseForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+            if (res.ok) {
+                this.style.display = 'none';
+                document.getElementById('enterpriseSuccess').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>

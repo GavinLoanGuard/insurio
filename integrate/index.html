@@ -442,6 +442,11 @@ insuri(<span class="string">'init'</span>, {
                             <button type="submit" class="btn btn-primary btn-large" style="width:100%">Request Access</button>
                             <p style="font-size:13px;color:var(--slate-500);text-align:center;margin-top:16px">We typically respond within one business day.</p>
                         </form>
+                        <div id="apiSuccess" style="display:none;text-align:center;padding:40px 20px">
+                            <div style="font-size:48px;margin-bottom:16px">✓</div>
+                            <h3 style="margin-bottom:12px">Request received!</h3>
+                            <p style="color:var(--slate-600)">We'll be in touch within one business day with your sandbox credentials.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -526,6 +531,16 @@ insuri(<span class="string">'init'</span>, {
 
     <script src="../js/main.js"></script>
     <script>
+        document.getElementById('apiForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+            if (res.ok) {
+                this.style.display = 'none';
+                document.getElementById('apiSuccess').style.display = 'block';
+            }
+        });
+
         // Tab functionality
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
