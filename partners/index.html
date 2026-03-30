@@ -356,11 +356,10 @@
                     </div>
                     <div>
                         <div class="form-card">
-                            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-                            <form id="partnerForm" action="https://script.google.com/macros/s/AKfycbz_NM7YgyueR38wepoTIfH-mjZ3HM8yrq2JEiabWUzNUWSLVyKdxQm2-gZYqrEG4N2_VQ/exec" method="POST" target="hidden_iframe">
-                                <!-- Honeypot for spam protection -->
-                                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-                                <input type="hidden" name="_subject" value="New partner application from Insurio">
+                            <form id="partnerForm" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="c1137efa-ae27-4b62-940f-9eae236195b2">
+                                <input type="checkbox" name="botcheck" style="display:none">
+                                <input type="hidden" name="subject" value="New Partner Application from Insurio">
                                 
                                 <div class="form-row">
                                     <div class="form-group">
@@ -399,6 +398,11 @@
                 <button type="submit" class="btn btn-primary btn-large" style="width:100%">Submit Application</button>
                                 <p class="form-note" style="text-align:center">We'll be in touch within 24 hours.</p>
                             </form>
+                            <div id="partnerSuccess" style="display:none;text-align:center;padding:40px 20px">
+                                <div style="font-size:48px;margin-bottom:16px">✓</div>
+                                <h3 style="margin-bottom:12px">Application received!</h3>
+                                <p style="color:var(--slate-600)">We'll review your application and be in touch within 24 hours.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -490,5 +494,16 @@
     </div>
 
     <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('partnerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+            if (res.ok) {
+                this.style.display = 'none';
+                document.getElementById('partnerSuccess').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>

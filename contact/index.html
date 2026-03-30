@@ -138,13 +138,10 @@
                     <div>
                         <h3 style="margin-bottom:24px">Request a Quote</h3>
                         <div class="form-card">
-                            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-                            <form id="quoteForm" action="https://script.google.com/macros/s/AKfycbzIMHEDuydD-sZ-SPPFhskx8BIwu4sCwInd-MurELwXnSKQU6gx3AoQTo3_E9B_bZ-0/exec" method="POST" target="hidden_iframe">
-                                <!-- Honeypot field (hidden from users, catches bots) -->
-                                <input type="text" name="_gotcha" style="display:none">
-                                
-                                <!-- Subject line for email -->
-                                <input type="hidden" name="_subject" value="New Quote Request from Insurio Contact Form">
+                            <form id="quoteForm" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="c1137efa-ae27-4b62-940f-9eae236195b2">
+                                <input type="checkbox" name="botcheck" style="display:none">
+                                <input type="hidden" name="subject" value="New Quote Request from Insurio Contact Form">
                                 
                                 <div class="form-row">
                                     <div class="form-group">
@@ -199,6 +196,11 @@
                 <button type="submit" class="btn btn-primary btn-large" style="width:100%">Request Quote</button>
                                 <p class="form-note" style="text-align:center">We'll respond within 24 hours.</p>
                             </form>
+                            <div id="quoteSuccess" style="display:none;text-align:center;padding:40px 20px">
+                                <div style="font-size:48px;margin-bottom:16px">✓</div>
+                                <h3 style="margin-bottom:12px">Thanks, we'll be in touch!</h3>
+                                <p style="color:var(--slate-600)">We typically respond within 24 hours. Keep an eye on your inbox.</p>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -330,5 +332,16 @@
     </div>
 
     <script src="../js/main.js"></script>
+    <script>
+        document.getElementById('quoteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+            if (res.ok) {
+                this.style.display = 'none';
+                document.getElementById('quoteSuccess').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
